@@ -61,7 +61,7 @@ function animate(){
     currentTime = now;
     var fract = deltat / duration;
     var angle = Math.PI * 2 * fract;
-    var movement = now * 0.001;
+    var movement = now * 0.0001;
 
     planetGroup.rotation.y += angle;
     earthGroup.rotation.y += angle;
@@ -97,17 +97,16 @@ function animate(){
     neptune_moon1.rotation.y += angle;
     neptune_moon2.rotation.y += angle;
     pluto.rotation.y += angle;
-    asteroid.rotation.y += angle / 50;
+    asteroid.rotation.y += angle;
 }
 
 function run() {
     requestAnimationFrame(function() { run(); });
 
-        // Render the scene
-        renderer.render( scene, camera );
-
-        // Spin the cube for next frame
-        animate();
+    // Render the scene
+    renderer.render( scene, camera );
+    // Spin the cube for next frame
+    animate();
 }
 
 function createScene(canvas){
@@ -123,11 +122,10 @@ function createScene(canvas){
     // Set the background image
     var textureUrl = "./images/stars.jpg";
     scene.background = new THREE.TextureLoader().load(textureUrl);
-    // scene.background = new THREE.Color( "rgb(100, 100, 100)" );
 
     // Add  a camera so we can view the scene
     camera = new THREE.PerspectiveCamera( 45, canvas.width / canvas.height, 1, 4000 );
-    camera.position.y = 2;
+    camera.position.y = 0;
     camera.position.z = 100;
     scene.add(camera);
 
@@ -173,7 +171,7 @@ function createScene(canvas){
     textureUrl = "./images/sunmap.jpg";
     var texture = new THREE.TextureLoader().load(textureUrl);
     var material = new THREE.MeshBasicMaterial({ map: texture });
-    var geometry = new THREE.SphereGeometry(4, 20, 20);
+    var geometry = new THREE.SphereGeometry(4, 25, 25);
     sun = new THREE.Mesh(geometry, material);
     planetGroup.add( sun );
 
