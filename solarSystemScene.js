@@ -44,6 +44,7 @@ pluto = null,
 pluto_orbit = null,
 asteroidBelt = null,
 asteroid = null,
+asteroid2 = null,
 asteroidBelt2 = null;
 
 var duration = 10000; // ms
@@ -54,6 +55,12 @@ var x = 0;
 var y = 0;
 var z = 0;
 var radius = 0;
+var min2 = 45;
+var max2 = 48;
+var x2 = 0;
+var y2= 0;
+var z2 = 0;
+var radius2 = 0;
 
 function animate(){
     var now = Date.now();
@@ -98,6 +105,7 @@ function animate(){
     neptune_moon2.rotation.y += angle;
     pluto.rotation.y += angle;
     asteroid.rotation.y += angle;
+    asteroid2.rotation.y += angle;
 }
 
 function run() {
@@ -423,40 +431,30 @@ function createScene(canvas){
     pluto_orbit.rotation.x = Math.PI / 2;
     planetGroup.add( pluto_orbit );
 
-
-
     geometry = new THREE.SphereGeometry(.1, 20, 20);
     texture = new THREE.TextureLoader().load('./images/asteroidmap.jpg');
-    material = new THREE.MeshPhongMaterial({ map: texture, bumpMap: '', bumpScale: 0.005 });
+    material = new THREE.MeshPhongMaterial({ map: texture, bumpMap: '', bumpScale: 0.05 });
 
     // For loop for several asteroids
     for (var i = 0; i < 1000; i++) {
         asteroid = new THREE.Mesh(geometry, material);
+        asteroid2 = new THREE.Mesh(geometry, material);
         radius = Math.random() * (max - min) + min;
+        radius2 = Math.random() * (max2 - min2) + min2;
         x = radius * Math.cos((i * (Math.PI / 180)));
+        x2 = radius2 * Math.cos((i * (Math.PI / 180)));
         y = radius * Math.sin((i * (Math.PI / 180)));
+        y2 = radius2 * Math.sin((i * (Math.PI / 180)));
         z = (Math.random() * ((radius * .05) - (radius * -.05)) + (radius * -.05));
+        z2 = (Math.random() * ((radius2 * .05) - (radius2 * -.05)) + (radius2 * -.05));
         asteroid.position.set(x, y, z);
+        asteroid2.position.set(x2, y2, z2);
         asteroidBelt.add(asteroid);
+        asteroidBelt2.add(asteroid2);
     }
     asteroidBelt.rotation.x = Math.PI / 2;
-    planetGroup.add(asteroidBelt);
-
-    radius, x, y, z = 0;
-    max = 45;
-    min = 48;
-
-    // For loop for several asteroids
-    for (var i = 0; i < 1000; i++) {
-        asteroid = new THREE.Mesh(geometry, material);
-        radius = Math.random() * (max - min) + min;
-        x = radius * Math.cos((i * (Math.PI / 180)));
-        y = radius * Math.sin((i * (Math.PI / 180)));
-        z = (Math.random() * ((radius * .05) - (radius * -.05)) + (radius * -.05));
-        asteroid.position.set(x, y, z);
-        asteroidBelt2.add(asteroid);
-    }
     asteroidBelt2.rotation.x = Math.PI / 2;
+    planetGroup.add(asteroidBelt);
     planetGroup.add(asteroidBelt2);
 
     // Now add the group to our scene
