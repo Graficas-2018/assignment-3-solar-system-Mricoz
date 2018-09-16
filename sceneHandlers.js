@@ -61,6 +61,7 @@ function onMouseUp(evt){
 }
 
 function addMouseHandler(canvas){
+    canvas.addEventListener( 'contextmenu', event => event.preventDefault());
     canvas.addEventListener( 'mousemove',
             function(e) { onMouseMove(e); }, false );
     canvas.addEventListener( 'mousedown',
